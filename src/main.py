@@ -1,11 +1,23 @@
+"""Simple Raspberry pi chess clock implementation"""
+
 import tkinter as tk
 from tkinter import ttk
 
 
 class ChessClockApplication:
+    GRAY_COLOR = "#bfbdbd"
+
     def __init__(self):
         self.root = tk.Tk()
         self.root.minsize(640, 480)
+
+        self.menu_bar = tk.Menu(self.root)
+        self.settings_menu = tk.Menu(self.menu_bar, tearoff=False)
+        self.menu_bar.add_cascade(menu=self.settings_menu, label="Configuració")
+        self.settings_menu.add_command(label="Configura Rellotge...", command=...)
+
+        self.root.config(menu=self.menu_bar)
+
         self.leftside = tk.Frame(self.root)
         self.rightside = tk.Frame(self.root)
         self.clock_text_left = ttk.Label(
@@ -19,8 +31,8 @@ class ChessClockApplication:
             font=("Consolas", 50),
         )
 
-        self.leftside.configure(bg="#bfbdbd")
-        self.rightside.configure(bg="#bfbdbd")
+        self.leftside.configure(bg=self.GRAY_COLOR)
+        self.rightside.configure(bg=self.GRAY_COLOR)
 
         self.leftside.grid(column=0, row=0, sticky=(tk.N, tk.W, tk.S, tk.E))
         self.rightside.grid(column=1, row=0, sticky=(tk.N, tk.W, tk.S, tk.E))
