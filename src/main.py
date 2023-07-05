@@ -139,30 +139,34 @@ class ConfigureScreen(tk.Toplevel):
         self.right_tenths_label = tk.Label(self.right_area, text="Dècimes")
         self.right_increment_label = tk.Label(self.right_area, text="Increment")
 
-        self.left_area.grid(column=0, row=0, sticky=(tk.N, tk.W, tk.S, tk.E))
-        self.right_area.grid(column=0, row=1, sticky=(tk.N, tk.W, tk.S, tk.E))
+        self.left_area.grid(row=0, column=0, sticky=(tk.N, tk.W, tk.S, tk.E))
+        self.right_area.grid(row=0, column=1, sticky=(tk.N, tk.W, tk.S, tk.E))
 
-        self.left_minutes_dialog.grid(column=0, row=1, padx=10, pady=10)
-        self.left_seconds_dialog.grid(column=1, row=1, padx=10, pady=10)
-        self.left_tenths_dialog.grid(column=2, row=1, padx=10, pady=10)
-        self.left_increment_dialog.grid(column=3, row=1, padx=10, pady=10)
+        self.left_minutes_dialog.grid(row=0, column=1, padx=10, pady=10)
+        self.left_seconds_dialog.grid(row=1, column=1, padx=10, pady=10)
+        self.left_tenths_dialog.grid(row=2, column=1, padx=10, pady=10)
+        self.left_increment_dialog.grid(row=3, column=1, padx=10, pady=10)
 
-        self.left_minutes_label.grid(column=0, row=0, padx=10, pady=10)
-        self.left_seconds_label.grid(column=1, row=0, padx=10, pady=10)
-        self.left_tenths_label.grid(column=2, row=0, padx=10, pady=10)
-        self.left_increment_label.grid(column=3, row=0, padx=10, pady=10)
+        self.left_minutes_label.grid(row=0, column=0, padx=10, pady=10)
+        self.left_seconds_label.grid(row=1, column=0, padx=10, pady=10)
+        self.left_tenths_label.grid(row=2, column=0, padx=10, pady=10)
+        self.left_increment_label.grid(row=3, column=0, padx=10, pady=10)
 
-        self.right_minutes_dialog.grid(column=0, row=1, padx=10, pady=10)
-        self.right_seconds_dialog.grid(column=1, row=1, padx=10, pady=10)
-        self.right_tenths_dialog.grid(column=2, row=1, padx=10, pady=10)
-        self.right_increment_dialog.grid(column=3, row=1, padx=10, pady=10)
+        self.right_minutes_dialog.grid(row=0, column=1, padx=10, pady=10)
+        self.right_seconds_dialog.grid(row=1, column=1, padx=10, pady=10)
+        self.right_tenths_dialog.grid(row=2, column=1, padx=10, pady=10)
+        self.right_increment_dialog.grid(row=3, column=1, padx=10, pady=10)
 
-        self.right_minutes_label.grid(column=0, row=0, padx=10, pady=10)
-        self.right_seconds_label.grid(column=1, row=0, padx=10, pady=10)
-        self.right_tenths_label.grid(column=2, row=0, padx=10, pady=10)
-        self.right_increment_label.grid(column=3, row=0, padx=10, pady=10)
+        self.right_minutes_label.grid(row=0, column=0, padx=10, pady=10)
+        self.right_seconds_label.grid(row=1, column=0, padx=10, pady=10)
+        self.right_tenths_label.grid(row=2, column=0, padx=10, pady=10)
+        self.right_increment_label.grid(row=3, column=0, padx=10, pady=10)
 
-        self.cancel = tk.Button
+        self.cancel = tk.Button(self, text="Descarta")
+        self.accept = tk.Button(self, text="Accepta")
+
+        self.accept.grid(row=1, column=1)
+        self.cancel.grid(row=1, column=0)
 
 
 if __name__ == "__main__":
