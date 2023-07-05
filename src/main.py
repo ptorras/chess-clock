@@ -78,8 +78,12 @@ class ChessClockApplication:
         self._draw_time()
 
     def _draw_time(self):
-        self.clock_text_left_content.set(self._format_time(self.status.left_time))
-        self.clock_text_right_content.set(self._format_time(self.status.right_time))
+        self.clock_text_left_content.set(
+            self._format_time(self.status.left_time),
+        )
+        self.clock_text_right_content.set(
+            self._format_time(self.status.right_time),
+        )
 
     @staticmethod
     def _format_time(ticks: int) -> str:
@@ -108,9 +112,57 @@ class ChessClockApplication:
 class ConfigureScreen(tk.Toplevel):
     def __init__(self, status: ClockStatus) -> None:
         super().__init__()
-        self.minsize(300, 480)
         self.title = "Configuració"
         self.clock_status = status
+
+        self.left_area = tk.Frame(self)
+
+        self.left_minutes_dialog = tk.Entry(self.left_area)
+        self.left_seconds_dialog = tk.Entry(self.left_area)
+        self.left_tenths_dialog = tk.Entry(self.left_area)
+        self.left_increment_dialog = tk.Entry(self.left_area)
+
+        self.left_minutes_label = tk.Label(self.left_area, text="Minuts")
+        self.left_seconds_label = tk.Label(self.left_area, text="Segons")
+        self.left_tenths_label = tk.Label(self.left_area, text="Dècimes")
+        self.left_increment_label = tk.Label(self.left_area, text="Increment")
+
+        self.right_area = tk.Frame(self)
+
+        self.right_minutes_dialog = tk.Entry(self.right_area)
+        self.right_seconds_dialog = tk.Entry(self.right_area)
+        self.right_tenths_dialog = tk.Entry(self.right_area)
+        self.right_increment_dialog = tk.Entry(self.right_area)
+
+        self.right_minutes_label = tk.Label(self.right_area, text="Minuts")
+        self.right_seconds_label = tk.Label(self.right_area, text="Segons")
+        self.right_tenths_label = tk.Label(self.right_area, text="Dècimes")
+        self.right_increment_label = tk.Label(self.right_area, text="Increment")
+
+        self.left_area.grid(column=0, row=0, sticky=(tk.N, tk.W, tk.S, tk.E))
+        self.right_area.grid(column=0, row=1, sticky=(tk.N, tk.W, tk.S, tk.E))
+
+        self.left_minutes_dialog.grid(column=0, row=1, padx=10, pady=10)
+        self.left_seconds_dialog.grid(column=1, row=1, padx=10, pady=10)
+        self.left_tenths_dialog.grid(column=2, row=1, padx=10, pady=10)
+        self.left_increment_dialog.grid(column=3, row=1, padx=10, pady=10)
+
+        self.left_minutes_label.grid(column=0, row=0, padx=10, pady=10)
+        self.left_seconds_label.grid(column=1, row=0, padx=10, pady=10)
+        self.left_tenths_label.grid(column=2, row=0, padx=10, pady=10)
+        self.left_increment_label.grid(column=3, row=0, padx=10, pady=10)
+
+        self.right_minutes_dialog.grid(column=0, row=1, padx=10, pady=10)
+        self.right_seconds_dialog.grid(column=1, row=1, padx=10, pady=10)
+        self.right_tenths_dialog.grid(column=2, row=1, padx=10, pady=10)
+        self.right_increment_dialog.grid(column=3, row=1, padx=10, pady=10)
+
+        self.right_minutes_label.grid(column=0, row=0, padx=10, pady=10)
+        self.right_seconds_label.grid(column=1, row=0, padx=10, pady=10)
+        self.right_tenths_label.grid(column=2, row=0, padx=10, pady=10)
+        self.right_increment_label.grid(column=3, row=0, padx=10, pady=10)
+
+        self.cancel = tk.Button
 
 
 if __name__ == "__main__":
