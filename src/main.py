@@ -137,9 +137,9 @@ class ClockStatus:
         self.tick()
         if self._running:
             if self._left_plays and self._left_time > 0:
-                self._left_time += self.left_increment
+                self._left_time += self._left_inc
             if not self._left_plays and self._right_time > 0:
-                self._right_time += self.right_increment
+                self._right_time += self._right_inc
             self._left_plays = val
 
 
