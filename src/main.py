@@ -140,7 +140,7 @@ class ClockStatus:
                 self._left_time += self._left_inc
             if not self._left_plays and self._right_time > 0:
                 self._right_time += self._right_inc
-            self._left_plays = val
+        self._left_plays = val
 
 
 class ChessClockApplication:
@@ -383,6 +383,23 @@ class ConfigureScreen(tk.Toplevel):
         self.accept.grid(row=1, column=1)
         self.cancel.grid(row=1, column=0)
 
+        self.radio_var = tk.StringVar()
+        self.radio_var.set("left" if self.clock_status.left_plays else "right")
+        self.radio_left = ttk.Radiobutton(
+            self.left_area,
+            text="<---",
+            variable=self.radio_var,
+            value="left",
+        )
+        self.radio_right = ttk.Radiobutton(
+            self.right_area,
+            text="--->",
+            variable=self.radio_var,
+            value="right",
+        )
+        self.radio_left.grid(row=4, column=0, padx=10, pady=10)
+        self.radio_right.grid(row=4, column=0, padx=10, pady=10)
+
     def _close_window(self) -> None:
         self.grab_release()
         self.destroy()
@@ -396,6 +413,8 @@ class ConfigureScreen(tk.Toplevel):
         self.clock_status.right_minutes = int(self.right_minutes_var.get())
         self.clock_status.right_seconds = int(self.right_seconds_var.get())
         self.clock_status.right_tenths = int(self.right_tenths_var.get())
+
+        self.clock_status.left_plays = True if self.radio_var.get() == "left" else False
 
         self.parent._draw_time()
         self._close_window()
