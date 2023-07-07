@@ -27,17 +27,25 @@ class ClockStatus:
         self._left_plays = left_plays
         self._running = running
 
+        self._last_toggle = 0
+
     def tick(self):
-        if self._left_plays:
-            self._left_time -= 1
+        if self._running:
+            delta = (int(time.time_ns()) - self._last_toggle) // int(1e8)
+            self._last_toggle = int(time.time_ns())
 
-            if self._left_time <= 0:
-                self.running = False
-        else:
-            self._right_time -= 1
+            if self._left_plays:
+                self._left_time -= delta
 
-            if self._right_time <= 0:
-                self.running = False
+                if self._left_time <= 0:
+                    self._left_time = 0
+                    self._running = False
+            else:
+                self._right_time -= delta
+
+                if self._right_time <= 0:
+                    self._right_time = 0
+                    self._running = False
 
     @property
     def left_minutes(self) -> int:
@@ -113,7 +121,12 @@ class ClockStatus:
 
     @running.setter
     def running(self, value: bool) -> None:
-        self._running = value
+        if self._left_time > 0 and self._right_time > 0:
+            if value:
+                self._last_toggle = int(time.time_ns())
+            else:
+                self.tick()
+            self._running = value
 
     @property
     def left_plays(self) -> bool:
@@ -121,7 +134,13 @@ class ClockStatus:
 
     @left_plays.setter
     def left_plays(self, val: bool) -> None:
-        self._left_plays = val
+        self.tick()
+        if self._running:
+            if self._left_plays and self._left_time > 0:
+                self._left_time += self.left_increment
+            if not self._left_plays and self._right_time > 0:
+                self._right_time += self.right_increment
+            self._left_plays = val
 
 
 class ChessClockApplication:
@@ -181,7 +200,7 @@ class ChessClockApplication:
         self.rightside.columnconfigure(0, weight=1)
         self.rightside.rowconfigure(0, weight=1)
 
-        self._draw_time()
+        self._update_clock()
 
     def configure(self) -> None:
         self.status.running = False
@@ -214,27 +233,23 @@ class ChessClockApplication:
             self.leftside.configure(bg=self.GRAY_COLOR)
             self.rightside.configure(bg=self.GRAY_COLOR)
 
+    def refresh_screen(self) -> None:
+        self._draw_time()
+        self._set_background()
+
     def _toggle_clock(self, event) -> None:
         self.status.running = not self.status.running
-        self._set_background()
-        self._draw_time()
-
-        if self.status.running:
-            self.root.after(100, self._update_clock)
+        self.refresh_screen()
 
     def _update_clock(self) -> None:
         self.status.tick()
-        if self.status.running:
-            self.root.after(100, self._update_clock)
-        self._draw_time()
-        self._set_background()
-        return None
+        self.root.after(100, self._update_clock)
+        self.refresh_screen()
 
     def _toggle_side(self, event) -> None:
         if self.status.running:
             self.status.left_plays = not self.status.left_plays
-            self._update_clock()
-            self._set_background()
+            self.refresh_screen()
         return None
 
     def main(self) -> None:
