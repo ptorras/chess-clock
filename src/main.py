@@ -147,6 +147,8 @@ class ChessClockApplication:
     GRAY_COLOR = "#bfbdbd"
     ACTIVE_COLOR = "#f58318"
 
+    FONT_SIZE = 120
+
     def __init__(self):
         self.root = tk.Tk()
         self.root.minsize(640, 480)
@@ -175,12 +177,12 @@ class ChessClockApplication:
         self.clock_text_left = ttk.Label(
             self.leftside,
             textvariable=self.clock_text_left_content,
-            font=("Consolas", 50),
+            font=("Consolas", self.FONT_SIZE),
         )
         self.clock_text_right = ttk.Label(
             self.rightside,
             textvariable=self.clock_text_right_content,
-            font=("Consolas", 50),
+            font=("Consolas", self.FONT_SIZE),
         )
 
         self.leftside.configure(bg=self.GRAY_COLOR)
